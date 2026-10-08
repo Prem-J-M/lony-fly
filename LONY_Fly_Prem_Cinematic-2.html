@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LONY Fly — Premium Demo</title>
+<style>
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:#050608;color:#f7f7f7;font-family:Arial,Helvetica,sans-serif}
+.cinematic-bg{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:-5;filter:saturate(.82) contrast(1.08) brightness(.42)}
+.video-overlay{position:fixed;inset:0;z-index:-4;background:linear-gradient(135deg,rgba(0,0,0,.78),rgba(3,5,8,.48) 48%,rgba(0,0,0,.82)),radial-gradient(circle at 78% 20%,rgba(246,211,101,.14),transparent 30%);pointer-events:none}
+body:before{content:"";position:fixed;inset:0;z-index:-3;background:
+radial-gradient(circle at 75% 20%,rgba(246,211,101,.16),transparent 28%),
+radial-gradient(circle at 15% 70%,rgba(210,215,225,.08),transparent 25%),
+linear-gradient(135deg,#030405,#11151c 55%,#030405)}
+body:after{content:"";position:fixed;z-index:-2;top:18%;left:-120px;font-size:80px;color:#fff;filter:drop-shadow(0 0 20px #f6d365);animation:fly 16s linear infinite}
+@keyframes fly{0%{left:-120px;transform:translateY(40px) rotate(-4deg);opacity:0}10%{opacity:.8}90%{opacity:.65}100%{left:110%;transform:translateY(-100px) rotate(-4deg);opacity:0}}
+.wrap{max-width:1120px;margin:auto;padding:22px}
+header{display:flex;justify-content:space-between;align-items:center;padding:10px 0 25px}
+.logo{font-size:30px;font-weight:900;letter-spacing:3px;background:linear-gradient(100deg,#a47d17,#f6d365,#fff,#c9cdd3,#f6d365,#9b7518);background-size:220%;-webkit-background-clip:text;color:transparent;animation:shine 4s linear infinite}
+@keyframes shine{to{background-position:220%}}
+.header-right{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:flex-end}
+.badge{border:1px solid #bda34e;border-radius:30px;padding:9px 15px;color:#f6d365;font-size:12px}
+.creator{padding:9px 14px;border-radius:30px;border:1px solid rgba(220,224,232,.28);background:rgba(10,12,16,.62);color:#cfd3da;font-size:12px;letter-spacing:.2px;backdrop-filter:blur(8px)}
+.creator b{color:#fff;font-weight:900}
+.hero{text-align:center;padding:45px 10px 30px}
+.hero h1{font-size:clamp(38px,7vw,72px);margin:0;background:linear-gradient(100deg,#fff,#f6d365,#fff);-webkit-background-clip:text;color:transparent}
+.hero p{color:#aaa;margin:12px 0 30px}
+.panel{background:rgba(12,15,21,.91);border:1px solid rgba(246,211,101,.28);border-radius:24px;padding:22px;box-shadow:0 25px 80px #0008}
+.tabs{display:flex;gap:8px;margin-bottom:20px}
+.tab{flex:1;padding:13px;border-radius:12px;border:1px solid #555;background:#12151b;color:#aaa;cursor:pointer}
+.tab.active{background:linear-gradient(120deg,#8e6b14,#f6d365,#fff1a8);color:#111;border-color:#f6d365;font-weight:bold}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
+label{font-size:12px;color:#aaa;display:block}
+input,select{width:100%;margin-top:7px;padding:14px;border-radius:11px;border:1px solid #383d46;background:#080a0e;color:white;outline:none}
+input:focus,select:focus{border-color:#f6d365}
+.action{margin-top:16px;width:100%;padding:15px;border:0;border-radius:12px;background:linear-gradient(110deg,#987319,#f6d365,#fff0a0,#b28b20);font-weight:900;cursor:pointer}
+section{margin-top:25px}.hidden{display:none!important}
+.section-title{font-size:24px;font-weight:900;margin-bottom:13px}
+.results{display:grid;gap:12px}
+.flight{display:grid;grid-template-columns:1fr 1.5fr .8fr .8fr auto;gap:12px;align-items:center;background:#0d1016;border:1px solid #292e37;border-radius:18px;padding:17px}
+.flight:hover{border-color:#d4b64f;box-shadow:0 0 24px #f6d36514}
+.flight small{display:block;color:#777;margin-top:4px}
+.time{font-size:20px;font-weight:800}
+.price{font-size:20px;font-weight:900;color:#f6d365}
+.btn{padding:11px 15px;border-radius:10px;border:1px solid #b99b38;background:#17130a;color:#f6d365;cursor:pointer;font-weight:800}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.plan{background:#0d1016;border:1px solid #30353e;border-radius:18px;padding:22px}
+.plan:hover{border-color:#f6d365}.plan h3{margin:0}.plan .price{font-size:28px;margin:12px 0}.plan p{color:#999}.plan button{width:100%}
+.seats{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;max-width:600px;margin:auto}
+.seat{padding:12px 5px;border:1px solid #444;background:#10141a;color:#fff;border-radius:8px;cursor:pointer}
+.seat.selected{background:#f6d365;color:#111;border-color:white}.seat:disabled{opacity:.2;cursor:not-allowed}
+.form{display:grid;gap:13px;max-width:600px}
+.ticket{border:1px solid #f6d365;border-radius:20px;padding:24px;background:linear-gradient(140deg,#101319,#17130b)}
+.ticket-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin:20px 0;padding:20px 0;border-top:1px dashed #555;border-bottom:1px dashed #555}
+.ticket-grid small{display:block;color:#777}.ticket-grid b{display:block;margin-top:5px}
+.notice{text-align:center;padding:13px;border:1px solid #7e6b32;border-radius:10px;color:#f6d365;margin-bottom:15px}
+@media(max-width:800px){.grid{grid-template-columns:1fr 1fr}.flight{grid-template-columns:1fr 1fr}.flight .btn{grid-column:1/-1}.plans{grid-template-columns:1fr}}
+@media(max-width:500px){.grid{grid-template-columns:1fr}.tabs{flex-direction:column}.ticket-grid{grid-template-columns:1fr}.header-right{width:100%;justify-content:flex-start}.creator{font-size:11px}}
+</style>
+</head>
+<body>
+<video class="cinematic-bg" autoplay muted loop playsinline preload="auto"
+  poster="https://images.pexels.com/videos/32343186/free-video-32343186.jpg"
+  aria-hidden="true">
+  <source src="https://www.pexels.com/download/video/32343186/" type="video/mp4">
+</video>
+<div class="video-overlay"></div>
+<div class="wrap">
+<header><div class="logo">LONY FLY</div><div class="header-right"><div class="badge">PREMIUM DEMO AIRLINES</div><div class="creator">App created by <b>Prem</b></div></div></header>
+
+<div class="hero">
+<h1>Fly Beyond Luxury</h1>
+<p>Premium flight booking experience • Demo only</p>
+</div>
+
+<div class="panel">
+<div class="tabs">
+<button class="tab active" id="one">ONE WAY</button>
+<button class="tab" id="round">ROUND TRIP</button>
+</div>
+<div class="grid">
+<label>From<select id="from"><option value="">Select city</option><option>Chennai (MAA)</option><option>Madurai (IXM)</option><option>Bengaluru (BLR)</option><option>Mumbai (BOM)</option><option>Delhi (DEL)</option></select></label>
+<label>To<select id="to"><option value="">Select city</option><option>Mumbai (BOM)</option><option>Madurai (IXM)</option><option>Delhi (DEL)</option><option>Bengaluru (BLR)</option><option>Chennai (MAA)</option></select></label>
+<label>Departure<input id="date" type="date"></label>
+<label id="returnBox" class="hidden">Return<input id="returnDate" type="date"></label>
+</div>
+<button class="action" id="search">SEARCH FLIGHTS</button>
+</div>
+
+<section id="flights" class="hidden"><div class="section-title">Available Flights</div><div id="flightList" class="results"></div></section>
+<section id="plans" class="hidden"><div class="section-title">Choose Your Plan</div><div id="planList" class="plans"></div></section>
+<section id="seatSection" class="hidden"><div class="section-title">Choose Your Seat</div><div class="panel"><div id="seatList" class="seats"></div><button class="action" id="seatNext">CONTINUE</button></div></section>
+<section id="passenger" class="hidden"><div class="section-title">Passenger Details</div><div class="panel form">
+<label>Full Name<input id="name" placeholder="Passenger name"></label>
+<label>Age<input id="age" type="number" placeholder="Age"></label>
+<label>Phone<input id="phone" placeholder="Phone number"></label>
+<button class="action" id="pay">CONTINUE TO DEMO PAYMENT</button>
+</div></section>
+<section id="payment" class="hidden"><div class="section-title">Demo Payment</div><div class="panel">
+<div class="notice">DEMO ONLY — No real payment is processed.</div>
+<div id="summary"></div><button class="action" id="confirm">CONFIRM DEMO BOOKING</button>
+</div></section>
+<section id="ticketSection" class="hidden"><div class="section-title">Booking Confirmed</div><div id="ticket" class="ticket"></div></section>
+</div>
+
+<script>
+(function(){
+const flights=[
+['LF 101','06:10','08:05',4299],['LF 118','07:30','09:25',4599],['LF 204','09:10','11:05',4999],
+['LF 226','10:45','12:40',4799],['LF 275','12:20','14:15',5199],['LF 318','14:25','16:20',5499],
+['LF 337','15:40','17:35',5299],['LF 382','17:05','19:00',4899],['LF 421','19:40','21:35',4699],
+['LF 448','21:15','23:10',5599],['LF 490','22:30','00:25',4999],['LF 512','23:20','01:15',5799]];
+const plans=[['Fly Basic',7999],['Fly Smart',14500],['Fly Elite',29999]];
+let trip='one',selectedFlight=null,selectedPlan=null,selectedSeat=null;
+
+const $=id=>document.getElementById(id), money=n=>'₹'+n.toLocaleString('en-IN');
+function show(id){$(id).classList.remove('hidden');$(id).scrollIntoView({behavior:'smooth',block:'start'})}
+function hide(id){$(id).classList.add('hidden')}
+
+$('one').onclick=()=>{trip='one';$('one').classList.add('active');$('round').classList.remove('active');$('returnBox').classList.add('hidden')};
+$('round').onclick=()=>{trip='round';$('round').classList.add('active');$('one').classList.remove('active');$('returnBox').classList.remove('hidden')};
+
+$('search').onclick=()=>{
+ const from=$('from').value,to=$('to').value,date=$('date').value;
+ if(!from||!to||!date){alert('Please select From, To and Departure date.');return}
+ if(from===to){alert('From and To cannot be same.');return}
+ if(trip==='round'&&!$('returnDate').value){alert('Please select return date.');return}
+ hide('plans');hide('seatSection');hide('passenger');hide('payment');hide('ticketSection');
+ $('flightList').innerHTML=flights.map((f,i)=>`
+ <div class="flight">
+  <div><b>LONY FLY</b><small>${f[0]}</small></div>
+  <div><span class="time">${f[1]} → ${f[2]}</span><small>${from} → ${to} • Direct</small></div>
+  <div><small>Economy</small><b>1h 55m</b></div>
+  <div class="price">${money(f[3])}</div>
+  <button class="btn" data-flight="${i}">SELECT & BOOK</button>
+ </div>`).join('');
+document.querySelectorAll('[data-flight]').forEach(b=>b.onclick=()=>selectFlight(+b.dataset.flight));
+show('flights');
+};
+
+function selectFlight(i){
+ selectedFlight=flights[i];
+ $('planList').innerHTML=plans.map((p,i)=>`
+ <div class="plan"><h3>${p[0]}</h3><div class="price">${money(p[1])}</div>
+ <p>Cabin baggage • Seat selection • LONY support</p>
+ <button class="btn" data-plan="${i}">CHOOSE PLAN</button></div>`).join('');
+document.querySelectorAll('[data-plan]').forEach(b=>b.onclick=()=>choosePlan(+b.dataset.plan));
+show('plans');
+}
+function choosePlan(i){
+selectedPlan=plans[i];selectedSeat=null;
+let s='';for(let r=1;r<=10;r++)for(const c of ['A','B','C','D','E','F']){
+let x=r+c,bad=['3B','5C','7A','8F','10D'].includes(x);
+s+=`<button class="seat" data-seat="${x}" ${bad?'disabled':''}>${x}</button>`;
+}
+$('seatList').innerHTML=s;
+document.querySelectorAll('[data-seat]').forEach(b=>b.onclick=()=>{document.querySelectorAll('.seat').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');selectedSeat=b.dataset.seat});
+show('seatSection');
+}
+$('seatNext').onclick=()=>{if(!selectedSeat){alert('Please select a seat.');return}show('passenger')};
+$('pay').onclick=()=>{
+if(!$('name').value.trim()||!$('age').value||!$('phone').value.trim()){alert('Please fill all passenger details.');return}
+$('summary').innerHTML=`<p>Flight: <b>${selectedFlight[0]}</b></p><p>Plan: <b>${selectedPlan[0]}</b></p><p>Seat: <b>${selectedSeat}</b></p><p>Total: <b>${money(selectedFlight[3]+selectedPlan[1])}</b></p>`;
+show('payment');
+};
+$('confirm').onclick=()=>{
+const pnr='LF'+Math.random().toString(36).slice(2,8).toUpperCase();
+$('ticket').innerHTML=`<h2>LONY FLY ✦ DEMO TICKET</h2><p>PNR: <b>${pnr}</b></p>
+<div class="ticket-grid"><div><small>PASSENGER</small><b>${$('name').value}</b></div>
+<div><small>FLIGHT</small><b>${selectedFlight[0]}</b></div>
+<div><small>ROUTE</small><b>${$('from').value} → ${$('to').value}</b></div>
+<div><small>TRIP</small><b>${trip==='one'?'ONE WAY':'ROUND TRIP'}</b></div>
+<div><small>PLAN</small><b>${selectedPlan[0]}</b></div><div><small>SEAT</small><b>${selectedSeat}</b></div>
+<div><small>FARE</small><b>${money(selectedFlight[3]+selectedPlan[1])}</b></div><div><small>STATUS</small><b>DEMO CONFIRMED</b></div></div>
+<button class="action" onclick="window.print()">PRINT TICKET</button>`;
+show('ticketSection');
+};
+})();
+</script>
+</body>
+</html>
